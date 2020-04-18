@@ -37,13 +37,16 @@ df = pd.concat([df, cat_vals], axis=1, sort=False)
 df.drop(columns=['original', 'categories'], inplace=True)
 
 # Insert into database (clearing out table if it already exists)
+print("Inserting data into DisasterResponse.db")
 engine = create_engine('sqlite:///data/DisasterResponse.db')
 tn = 'scored_messages'
 
 if engine.dialect.has_table(engine, tn):
     from sqlalchemy import MetaData, Table
     meta = MetaData()
-    tbl = Table('tn', meta)
+    tbl = Table(tn, meta)
     tbl.drop(engine)
 
 df.to_sql(tn, engine, index=False)
+
+print("Success!")
