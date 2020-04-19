@@ -22,7 +22,7 @@ the message, and exports the data to the table `scored_messages` in
 The process can be run from the base of the repo with the command 
 `python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db`
 The files `disaster_messages.csv` and `disaster_categories.csv` need to be in 
-the folder `data\` for this to work.
+the folder `data/` for this to work.
 
 ## 2. ML pipeline ##
 
@@ -37,7 +37,7 @@ nouns, verbs, and adjectives. They are transformed with TF-IDF.
 
 The process can be run from the base of the repo with the command 
 `python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl`
-The database `data\DisasterResponse.db` needs to contain the table 
+The database `data/DisasterResponse.db` needs to contain the table 
 `scored_messages` for this to run. 
 **NOTE**: the script is set up to perform a fairly ambitious grid search
 and will take a *long* time to run. Parameters are stored in the `params` 
@@ -57,12 +57,16 @@ scores around 0.5, indicating essentially random classifications.
 ## 3. Flask app ##
 
 The app has two components:
-* You can enter text message and have it classified using my classifier
+* You can enter text message and have it classified using the classifier 
+developed in Step #2
+* There's some graphing of the types of messages in the corpus (based on the
+database generated in Step #1); this could stand to be developed further.
+
 
 ### Running ###
 
-The app can be kicked off from the base of the repo with the command
-`python app\run.py`. This will be hosted at `http://0.0.0.0:3001` or, if running
+The webapp needs to be run from the `app/` folder, with the command 
+`python run.py`. This will be hosted at `http://0.0.0.0:3001` or, if running
 locally, `localhost:3001`.
 
 ## Licensing & Acknowledgements ## 
