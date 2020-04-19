@@ -1,13 +1,14 @@
+import bz2
 import json
 import nltk
 import pandas as pd
+import pickle
 import plotly
 
 
 from flask import Flask
-from flask import render_template, request, jsonify
+from flask import render_template, request
 from plotly.graph_objs import Bar
-from sklearn.externals import joblib
 from sqlalchemy import create_engine
 
 nltk.download('stopwords')
@@ -41,7 +42,9 @@ engine = create_engine('sqlite:///../data/DisasterResponse.db')
 df = pd.read_sql_table('scored_messages', engine)
 
 # load model
-model = joblib.load("../models/classifier.pkl")
+with bz2.BZ2File('../models/classifier.pkl.bz2', 'rb') as f:
+    model = pickle.load(f)
+
 
 
 # index webpage displays cool visuals and receives user input text for model

@@ -106,7 +106,6 @@ def evaluate_model(model, X_test, Y_test):
     y_pred = model.predict(X_test)
 
     scor_lst = []
-    # Need to use index because
     for idx, col in enumerate(Y_test.columns):
         rpt = classification_report(
             Y_test[col], y_pred[:, idx], output_dict=True)
@@ -126,8 +125,10 @@ def evaluate_model(model, X_test, Y_test):
 
 def save_model(model, model_filepath):
     """Write model object to pickle file"""
+    import bz2
     import pickle
-    with open(model_filepath, 'wb') as f:
+
+    with bz2.BZ2File(model_filepath+'.bz2', 'wb') as f:
         pickle.dump(model, f)
 
 
@@ -155,9 +156,9 @@ def main():
         print('Trained model saved!')
 
     else:
-        print('Please provide the filepath of the disaster messages database '\
-              'as the first argument and the filepath of the pickle file to '\
-              'save the model to as the second argument. \n\nExample: python '\
+        print('Please provide the filepath of the disaster messages database '
+              'as the first argument and the filepath of the pickle file to '
+              'save the model to as the second argument. \n\nExample: python '
               'train_classifier.py ../data/DisasterResponse.db classifier.pkl')
 
 
