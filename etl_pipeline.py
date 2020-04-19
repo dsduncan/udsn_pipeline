@@ -25,7 +25,6 @@ print(f"Category data loaded with shape: {categories.shape}")
 
 # Make feature for translated messages
 eng_msg = (messages.message == messages.original) | (messages.original.isna())
-eng_msg = [0 if val else 1 for val in eng_msg]
 messages['translated'] = eng_msg
 
 # Merge data
@@ -48,6 +47,7 @@ df.drop(columns=['original', 'categories'], inplace=True)
 
 # Insert into database (clearing out table if it already exists)
 print("Inserting data into DisasterResponse.db")
+print(df.dtypes)
 engine = create_engine('sqlite:///data/DisasterResponse.db')
 tn = 'scored_messages'
 
